@@ -1,0 +1,26 @@
+<!-- templates/create_user.html -->
+{% extends 'base.html' %}
+{% block title %}Create New User{% endblock %}
+{% block content %}
+<h1>Create New User</h1>
+
+<form method="post">
+    <label for="name">Full Name:</label>
+    <input type="text" name="name" id="name" required><br><br>
+    
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required><br><br>
+    
+    <label for="user_role">User Role:</label>
+    <select name="user_role" id="user_role">
+        <option value="admin">Admin</option>
+        <option value="manager">Manager</option>
+        <option value="normal">Normal</option>
+    </select><br><br>
+    
+    <button type="submit">Create User</button>
+</form>
+
+<!-- Back to management page -->
+<a href="{{ url_for('manage_users') }}"><button>Back to Manage Users</button></a>
+{% endblock %}

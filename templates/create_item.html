@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Create New Item{% endblock %}
+{% block content %}
+<h1>Create New Item</h1>
+<form method="post">
+    <label for="name">Item Name:</label>
+    <input type="text" name="name" id="name" required><br><br>
+    
+    <label for="category">Category:</label>
+    <input type="text" name="category" id="category"><br><br>
+    
+    <label for="item_user">Item User:</label>
+    <select name="item_user" id="item_user" required>
+        {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+        {% endfor %}
+    </select><br><br>
+    
+    <label for="item_location">Item Location:</label>
+    <select name="item_location" id="item_location" required>
+        {% for loc in locations %}
+            <option value="{{ loc.id }}">{{ loc.name }}</option>
+        {% endfor %}
+    </select><br><br>
+    
+    <label for="price">Price:</label>
+    <input type="number" step="0.01" name="price" id="price" required><br><br>
+    
+    <button type="submit">Create Item</button>
+</form>
+
+<!-- Back to Manage Items page -->
+<a href="{{ url_for('manage_items') }}"><button type="button">Back to Manage Items</button></a>
+{% endblock %}

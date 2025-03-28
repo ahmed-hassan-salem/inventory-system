@@ -1,0 +1,85 @@
+<!-- templates/manage_users.html -->
+{% extends 'base.html' %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+<Nav>
+  <a href="{{ url_for('home') }}"><button type="button">Home</button></a>
+<a href="{{ url_for('manage_locations') }}"><button type="button">Manage Locations</button></a>
+<a href="{{ url_for('manage_items') }}"><button type="button">Manage Items</button></a>
+<a href="{{ url_for('reports') }}"><button type="button">Create Reports</button></a>
+<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
+</Nav>
+<h1>Manage Users</h1>
+
+<!-- Button to create a new user -->
+<a href="{{ url_for('create_user') }}"><button>Create New User</button></a>
+
+{% for role, users in users_by_type.items() %}
+  <h2>{{ role|capitalize }} Users</h2>
+  {% if users %}
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+              <!-- Delete user form remains unchanged -->
+              <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+              </form>
+              <!-- Reset password button triggers JavaScript -->
+              <button type="button" onclick="resetPassword('{{ user.id }}')">Reset Password</button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No {{ role }} users found.</p>
+  {% endif %}
+{% endfor %}
+
+<!-- Modal Dialog for Displaying the New Password -->
+<div id="resetModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5);">
+  <div style="background: #fff; margin: 15% auto; padding: 20px; width: 300px; border-radius: 5px; text-align:center;">
+    <h2>New Password</h2>
+    <p id="newPasswordDisplay"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- JavaScript to perform AJAX reset and display modal -->
+<script>
+function resetPassword(userId) {
+  fetch('/reset_password/' + userId, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Display the new password in the modal dialog
+    document.getElementById('newPasswordDisplay').textContent = data.new_password;
+    document.getElementById('resetModal').style.display = 'block';
+  })
+  .catch(error => {
+    alert('Error resetting password.');
+  });
+}
+
+function closeModal() {
+  document.getElementById('resetModal').style.display = 'none';
+}
+</script>
+{% endblock %}

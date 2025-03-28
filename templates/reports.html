@@ -1,0 +1,23 @@
+<!-- templates/reports.html -->
+{% extends 'base.html' %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<Nav>
+  <a href="{{ url_for('home') }}"><button type="button">Home</button></a>
+  <a href="{{ url_for('manage_users') }}"><button type="button">Manage Users</button></a>
+  <a href="{{ url_for('manage_locations') }}"><button type="button">Manage Locations</button></a>
+  <a href="{{ url_for('manage_items') }}"><button type="button">Manage Items</button></a>
+  <a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
+  </Nav>
+<h1>Reports</h1>
+<form method="post" action="{{ url_for('generate_report') }}">
+  <label for="report_type">Select Report Type:</label>
+  <select name="report_type" id="report_type" required>
+    <option value="users">Users</option>
+    <option value="locations">Locations</option>
+    <option value="items">Items</option>
+  </select>
+  <br><br>
+  <button type="submit">Generate CSV Report</button>
+</form>
+{% endblock %}

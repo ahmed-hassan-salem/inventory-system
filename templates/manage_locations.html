@@ -1,0 +1,48 @@
+<!-- templates/manage_locations.html -->
+{% extends 'base.html' %}
+{% block title %}Manage Locations{% endblock %}
+{% block content %}
+<Nav>
+<a href="{{ url_for('home') }}"><button type="button">Home</button></a>
+<a href="{{ url_for('manage_users') }}"><button type="button">Manage Users</button></a>
+<a href="{{ url_for('manage_items') }}"><button type="button">Manage Items</button></a>
+<a href="{{ url_for('reports') }}"><button type="button">Create Reports</button></a>
+<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
+</Nav>
+<h1>Manage Locations</h1>
+
+<!-- New Create New Location Button -->
+<a href="{{ url_for('create_location') }}"><button type="button">Create New Location</button></a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Location Name</th>
+      <th>Address</th>
+      <th>Created By</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for location in locations %}
+    <tr>
+      <td>{{ location.id }}</td>
+      <td>{{ location.name }}</td>
+      <td>{{ location.address }}</td>
+      <td>{{ location.created_by }}</td>
+      <td>
+        <!-- Delete location form -->
+        <form action="{{ url_for('delete_location', location_id=location.id) }}" method="post" style="display:inline;">
+          <button type="submit">Delete</button>
+        </form>
+        <!-- Update location link -->
+        <a href="{{ url_for('update_location', location_id=location.id) }}">
+          <button type="button">Update</button>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

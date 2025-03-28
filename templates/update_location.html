@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Update Location{% endblock %}
+{% block content %}
+<h1>Update Location</h1>
+
+<form method="post">
+  <label for="name">Location Name:</label>
+  <input type="text" name="name" id="name" value="{{ location.name }}" required><br><br>
+
+  <label for="address">Location Address:</label>
+  <input type="text" name="address" id="address" value="{{ location.address }}" required><br><br>
+
+  <label for="created_by">Created By:</label>
+  <input type="text" name="created_by" id="created_by" value="{{ location.created_by }}"><br><br>
+
+  <button type="submit">Save</button>
+</form>
+{% endblock %}

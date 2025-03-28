@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<Nav>
+<a href="{{ url_for('manage_users') }}"><button type="button">Manage Users</button></a>
+<a href="{{ url_for('manage_locations') }}"><button type="button">Manage Locations</button></a>
+<a href="{{ url_for('manage_items') }}"><button type="button">Manage Items</button></a>
+<a href="{{ url_for('reports') }}"><button type="button">Create Reports</button></a>
+<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
+</Nav>
+<h1>Home Page</h1>
+<p>Welcome, {{ session.username }}!</p>
+<p>You have successfully logged in.</p>
+
+<!-- Your existing content (e.g., statistics columns) goes here -->
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+  <!-- Users Statistics Column -->
+  <div style="width: 30%;">
+    <h2>Users Statistics</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User Type</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Admin</td>
+          <td>{{ admin_count }}</td>
+        </tr>
+        <tr>
+          <td>Manager</td>
+          <td>{{ manager_count }}</td>
+        </tr>
+        <tr>
+          <td>Normal</td>
+          <td>{{ normal_count }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  
+  <!-- Locations Summary Column -->
+  <div style="width: 30%;">
+    <h2>Locations Summary</h2>
+    <p>Total Locations: {{ location_count }}</p>
+    
+  </div>
+  
+  <!-- Items Summary Column -->
+  <div style="width: 30%;">
+    <h2>Items Summary</h2>
+    <p>Total Items: {{ item_count }}</p>
+    
+  </div>
+  
+</div>
+{% endblock %}

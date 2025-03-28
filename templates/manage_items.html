@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Manage Items{% endblock %}
+{% block content %}
+<Nav>
+<a href="{{ url_for('home') }}"><button type="button">Home</button></a>
+<a href="{{ url_for('manage_users') }}"><button type="button">Manage Users</button></a>
+<a href="{{ url_for('manage_locations') }}"><button type="button">Manage Locations</button></a>
+<a href="{{ url_for('reports') }}"><button type="button">Create Reports</button></a>
+<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
+</Nav>
+<h1>Manage Items</h1>
+
+<!-- Button to create a new item -->
+<a href="{{ url_for('create_item') }}"><button type="button">Create New Item</button></a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Created By</th>
+      <th>Item User</th>
+      <th>Item Location</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.category }}</td>
+      <td>{{ item.created_by }}</td>
+      <td>{{ item.item_user }}</td>
+      <td>
+        {% if item.location %}
+          {{ item.location.name }}
+        {% else %}
+          N/A
+        {% endif %}
+      </td>
+      <td>{{ item.price }}</td>
+      <td>
+        <!-- Delete item form -->
+        <form action="{{ url_for('delete_item', item_id=item.id) }}" method="post" style="display:inline;">
+          <button type="submit">Delete</button>
+        </form>
+        <!-- Update item link -->
+        <a href="{{ url_for('update_item', item_id=item.id) }}">
+          <button type="button">Update</button>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Update Item{% endblock %}
+{% block content %}
+<h1>Update Item</h1>
+<form method="post">
+    <label for="name">Item Name:</label>
+    <input type="text" name="name" id="name" value="{{ item.name }}" required><br><br>
+    
+    <label for="category">Category:</label>
+    <input type="text" name="category" id="category" value="{{ item.category }}"><br><br>
+    
+    <label for="item_user">Item User:</label>
+    <select name="item_user" id="item_user" required>
+        {% for user in users %}
+            <option value="{{ user.username }}" {% if user.username == item.item_user %}selected{% endif %}>
+                {{ user.username }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+    
+    <label for="item_location">Item Location:</label>
+    <select name="item_location" id="item_location" required>
+        {% for loc in locations %}
+            <option value="{{ loc.id }}" {% if loc.id == item.item_location %}selected{% endif %}>
+                {{ loc.name }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+    
+    <label for="price">Price:</label>
+    <input type="number" step="0.01" name="price" id="price" value="{{ item.price }}" required><br><br>
+    
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
